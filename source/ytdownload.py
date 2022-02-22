@@ -10,6 +10,8 @@ class YT_DOWNLOAD:
         print('[ytdownload.py] video_url: ',video_url)
         
         yt = YouTube(video_url)
+       
+        print('yt, ',yt)
         
         self.video = yt.streams.filter(type='video', progressive=True).order_by('resolution')
         self.video_res = [stream.resolution for stream in self.video]

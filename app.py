@@ -42,7 +42,7 @@ def home():
                                 )        
         except Exception as e:
             
-            print("error: [app.py], ":e)
+            print("error: [app.py], ",e)
             
             return render_template('home.html', context={
                 "data":

@@ -1,10 +1,7 @@
 from pytube import YouTube
 
 class YT_DOWNLOAD:
-    def __init__(self):
-        
-        pass
-    
+       
     def getAudioAndVideoStreams(self, video_url):
         
         video, video_res = [], []

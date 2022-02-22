@@ -6,6 +6,8 @@ class YT_DOWNLOAD:
         
         video, video_res = [], []
         audio, audio_abr = [], []
+              
+        print('[ytdownload.py] video_url: ',video_url)
         
         yt = YouTube(video_url)
         

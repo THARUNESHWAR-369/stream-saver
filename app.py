@@ -42,6 +42,8 @@ def home():
                                 )        
         except Exception as e:
             
+            print("error: [app.py], ":e)
+            
             return render_template('home.html', context={
                 "data":
                     {"video_res":video_res, 

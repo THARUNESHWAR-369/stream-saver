@@ -1,7 +1,5 @@
-
-from fileinput import filename
 from flask import Flask, request
-from flask import render_template, redirect, url_for, send_file, send_from_directory, abort, safe_join
+from flask import render_template, redirect, url_for, send_file, send_from_directory
 from source.ytdownload import YT_DOWNLOAD
 import os
 
@@ -15,8 +13,6 @@ app = Flask(__name__)
 
 yt_download = YT_DOWNLOAD()
 
-app.config['DOWNLOAD_DIR'] = DOWNLOAD_DIR
-
 @app.route('/', methods=['POST', "GET"])
 def home():
 
@@ -29,6 +25,7 @@ def home():
         
     if request.method == "POST":
         video_url = request.form.to_dict()['video-url']
+        print('video_url: ',video_url)
         try:
             video_res, audio_abr, thumbnail_url, title = yt_download.getAudioAndVideoStreams(video_url=video_url)
         

@@ -140,7 +140,7 @@
                     document.getElementById('loader').style.display = 'none';
                 },
                 error:(e)=>{
-                console.log("error: ",e);
+                    console.log("error: ",e);
                     document.getElementById('loader').style.display = 'none';
                 }
             });
@@ -158,10 +158,12 @@
                 method: 'post',
                 data:{"format": value},
                 success:(res)=>{
+                    console.log("success: ",success);
                     
                     document.getElementById('loader').style.display = 'none';
                 },
                 error:(e)=>{
+                    console.log("error: ",e);
                     
                     document.getElementById('loader').style.display = 'none';
                 }

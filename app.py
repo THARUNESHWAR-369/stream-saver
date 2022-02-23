@@ -25,7 +25,7 @@ def home():
         
     if request.method == "POST":
         video_url = request.form.to_dict()['video-url']
-        print('video_url: ',video_url)
+        #print('video_url: ',video_url)
         try:
             video_res, audio_abr, thumbnail_url, title = yt_download.getAudioAndVideoStreams(video_url=video_url)
         
@@ -42,7 +42,7 @@ def home():
                                 )        
         except Exception as e:
             
-            print("error: [app.py], ",e)
+            #print("error: [app.py], ",e)
             
             return render_template('home.html', context={
                 "data":
@@ -76,12 +76,12 @@ def download_video():
     print('download_video')
     try:
         format = request.form.to_dict()['format']        
-        print(format)
+        #print(format)
         download_type= yt_download.getDownloadType(format=format)
-        print(download_type)
+        #print(download_type)
         
         fname = yt_download.downloadVideo(download_type, format)   
-        print("fname: ",fname)  
+        #print("fname: ",fname)  
     
         return send_file(fname, as_attachment=True)
     except:

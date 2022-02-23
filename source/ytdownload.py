@@ -7,11 +7,11 @@ class YT_DOWNLOAD:
         video, video_res = [], []
         audio, audio_abr = [], []
               
-        print('[ytdownload.py] video_url: ',video_url)
+        #print('[ytdownload.py] video_url: ',video_url)
         
         yt = YouTube(video_url)
        
-        print('yt, ',yt)
+        #print('yt, ',yt)
         
         self.video = yt.streams.filter(type='video', progressive=True).order_by('resolution')
         self.video_res = [stream.resolution for stream in self.video]
@@ -26,18 +26,18 @@ class YT_DOWNLOAD:
     
     def downloadVideo(self, download_type, format):
         
-        print(download_type)
+        #print(download_type)
         filename = None        
     
         if download_type == 'video':
             download_path = self.video[self.video_res.index(format)].download(output_path="downloads")
-            print(download_path)
+            #print(download_path)
             filename = download_path#.split('//')[-1]
-            print(filename)
+            #print(filename)
         if download_type == 'audio':
             download_path = self.audio[self.audio_abr.index(format)].download("downloads")
             filename = download_path.split('//')[-1]
         
-        print("Filename: ",filename)
+        #print("Filename: ",filename)
         return filename
     

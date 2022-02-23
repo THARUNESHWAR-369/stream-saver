@@ -134,13 +134,10 @@
                 method: 'post',
                 data:{"video-url": document.getElementById('video-url').value},
                 success:(res)=>{
-                    
-                    console.log("success: ",res);
-                    
+                                        
                     document.getElementById('loader').style.display = 'none';
                 },
                 error:(e)=>{
-                    console.log("error: ",e);
                     document.getElementById('loader').style.display = 'none';
                 }
             });
@@ -158,12 +155,10 @@
                 method: 'post',
                 data:{"format": value},
                 success:(res)=>{
-                    console.log("success: ",res);
                     
                     document.getElementById('loader').style.display = 'none';
                 },
                 error:(e)=>{
-                    console.log("error: ",e);
                     
                     document.getElementById('loader').style.display = 'none';
                 }

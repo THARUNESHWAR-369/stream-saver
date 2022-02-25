@@ -4,169 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youtube Downloader</title>
+    <title>Youtube video downloader</title>
 
     <!--  External css  -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="../static/css/home.css">
 
     <!--  Font awesome  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
+    
 </head>
 <body>
-    <div class="loader" id="loader">
-        <div>
-            <div class="heart-loader"></div>
+    <div class="nav_container">
+        <div class="nav">
+            <h2>Youtube Downloader</h2>
         </div>
     </div>
-    <div class="main">
-        <div class="nav_container">
-            <div class="nav">
-                <h2>Youtube Downloader</h2>
-            </div>
-        </div>
+
+    <div class="main_container">
         <div class="body_container">
-            
-            <form action="{{ url_for('home') }}" method="post">
-                <div class="input_field">
-                    {% if context['data']['video_url'] == none or context['data']['error'] != none %}
-                        <input type="text" placeholder="Video URL" name="video-url" id="video-url" class="video-url" required autocomplete="off">                
-                        <div class="download_btn">
-                            {% if context['data']['video_res'] == none or context['data']['audio_abr'] == none %}
-                                <input id="loadVideo" type="submit" class="btn" id="download" value="Download">
-                            {% endif %}
-                        </div>
-                    {% else %}
-                        <input type="text" placeholder="Video URL" value="{{ context['data']['video_url'] }}" name="video-url" id="video-url" class="video-url" required autocomplete="off">   
-                        <button id="loadVideo" class="submit-btn" type="submit">GO</button>
-                    {% endif %}
+
+            <div class="form_container">
+                <form method="POST">
+                    <input type="text" placeholder="Video url" name="video-url" autocomplete="off">
+                    <button type="submit" class="submit-btn">GO</button>
+                </form>   
+            </div>
+
+            {% if url != none %}
+                <div class="video_details">
+                    <div class="video_title">
+                        <header>{{ url.title }}</header>
+                    </div>
+                    <div class="video_thumbnail">
+                        <img src="{{ url.thumbnail_url }}" alt="" class="video_thumbnail">
+                    </div>
                 </div>
-            </form>
 
-            <br>
-
-            {% if context['data']['error'] != none %}
-                <div class="error_container">
-                    <p>{{context['data']['error']}}</p>
-                </div>
-                <br>
-            {% endif %}
-
-            {% if context['data']['video_res'] != none or context['data']['audio_abr'] != none %}
-                
-                {% set data = context['data'] %}
-
-        
-
+                    
                 <div class="cards_container">
-
-                    {% if context['data']['title']  != none %}
-                        <div class="title_container">
-                            <h2>{{ context['data']['title'] }}</h2>
-                        </div>
-                    {% endif %}
-
-                    <br>
-                    
-                    {% if context['data']['thumbnail_url'] != none %}
-                        <div class="img_container">
-                            <img class='img_responsive' src="{{ context['data']['thumbnail_url'] }}" alt="not found" height="450" width="450">
-                        </div>
-                    {% endif %}
-                    
-                    <br>
-
                     <div class="video_cards row">
-
                         <header>Video: </header>
-            
-                        {% for pixel in data['video_res'] %}
-                            <div class="cards column">
-                                <form id="download-form" action="/download_file" method="post">                                  
-                                    <input style="display:none;" type="text" name="format" value="{{pixel}}" readonly>
-                                    <input class="card" id="load_loader" onclick="loadLoader(this);" type="submit" value="{{pixel}}">
+                        {% for i in url.streams.filter(progressive=True, type=video) %} 
+                            <div class="cards">
+                                <form id="download-form" action="{{ url_for('download_file') }}" method="post">                                  
+                                    <input style="display:none;" type="text" name="itag" value="{{ i.itag }}" readonly>
+                                    <input class="card" id="load_loader" type="submit" value="{{ i.resolution }}">
                                 </form>
                             </div>
                         {% endfor %}
-
-                    </>
                     </div>
-                    <br>
-                    <div class="audio_cards row">
-                        <header>Audio: </header>
 
-                        {% for abr in data['audio_abr'] %}
-                            <div class="cards column">
-                                <form action="/download_file" method="post">                                  
-                                    <input style="display:none;" type="text" name="format" value="{{abr}}" readonly>
-                                    <input id="load_loader" onclick="loadLoader(this);" class="card" type="submit" value="{{abr}}">
-                                </form>
-                            </div>
-                        {% endfor %}
-
-                    </div>
                 </div>
+
             {% endif %}
-
-            <br>
-            
-        </div>
-
-        <br>
-        
-        <div class="footer">
-            <h3>Done by THARUNESHWAR</h3>
         </div>
     </div>
+
+
     
-    <!--  Ajax  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-    <script>
-        
-        $('#loadVideo').click(()=>{
-            document.getElementById('loader').style.display = 'block';
-
-            $.post({
-                url:'/',
-                method: 'post',
-                data:{"video-url": document.getElementById('video-url').value},
-                success:(res)=>{
-                                        
-                    document.getElementById('loader').style.display = 'none';
-                },
-                error:(e)=>{
-                    document.getElementById('loader').style.display = 'none';
-                }
-            });
-
-
-        });
-
-        function loadLoader(st){
-            var value = st.value;
-            
-            document.getElementById('loader').style.display = 'block';
-
-            $.post({
-                url:'/download_file',
-                method: 'post',
-                data:{"format": value},
-                success:(res)=>{
-                    
-                    document.getElementById('loader').style.display = 'none';
-                },
-                error:(e)=>{
-                    
-                    document.getElementById('loader').style.display = 'none';
-                }
-            });
-            
-        }
-
-    </script>
+    
 
 </body>
 </html>

@@ -1,94 +1,65 @@
-from flask import Flask, request
-from flask import render_template, redirect, url_for, send_file, send_from_directory
-from source.ytdownload import YT_DOWNLOAD
+from flask import Flask, send_file
+from flask import request
+from flask import render_template
+from flask import redirect
+from flask import url_for
+from flask import session
+from pytube import YouTube
+
 import os
+from io import BytesIO
 
 DOWNLOAD_DIR = 'downloads'
 
+# create download directory (if not exists)
 if not os.path.exists(DOWNLOAD_DIR):
     os.mkdir(DOWNLOAD_DIR)
 
-
+# create app instance
 app = Flask(__name__)
 
-yt_download = YT_DOWNLOAD()
+# secret key
+app.config['SECRET_KEY'] = "adksjfksjdfiomewo34j3o4jw3oaj4"
 
-@app.route('/', methods=['POST', "GET"])
+# Initialize download directory
+app.config['DOWNLOAD_DIR'] = DOWNLOAD_DIR
+
+# methods
+methods = ['POST', "GET"]
+
+# routes
+home_route = '/'
+download_file_route = '/download_file'
+
+# home page
+@app.route(home_route, methods=methods)
 def home():
-
-    download_type = None
-    thumbnail_url = None
-    title = None
-    video_res = None
-    audio_abr = None
-    video_url = None   
-        
     if request.method == "POST":
-        video_url = request.form.to_dict()['video-url']
-        #print('video_url: ',video_url)
+        session['link'] = request.form.get("video-url")
+        print(request.form.get("video-url"), session['link'])
         try:
-            video_res, audio_abr, thumbnail_url, title = yt_download.getAudioAndVideoStreams(video_url=video_url)
-        
-            return render_template('home.html', context={
-                "data":
-                    {"video_res":video_res, 
-                    'audio_abr':audio_abr, 
-                    "video_url":video_url,
-                    "thumbnail_url":thumbnail_url,
-                    "title":title,
-                    "error":None
-                    }
-                    }
-                                )        
-        except Exception as e:
-            
-            #print("error: [app.py], ",e)
-            
-            return render_template('home.html', context={
-                "data":
-                    {"video_res":video_res, 
-                    'audio_abr':audio_abr, 
-                    "video_url":video_url,
-                    "thumbnail_url":thumbnail_url,
-                    "title":title,
-                    "error":"Provide vaild URL."                        
-                    }
-                    }
-                                )  
-            
-            
-    return render_template('home.html', context={
-        "data":
-            {"video_res":None,
-             "audio_abr":None, 
-             "video_url":None,
-             "thumbnail_url":None,
-             "title":None,
-             "error":None
-             }
-            }
-                           )
-    
+            url = YouTube(session['link'])
+            url.check_availability()
+        except:
+            return "url not found"
+        return render_template("home.html", url=url)
+    return render_template("home.html", url=None)
 
-@app.route("/download_file", methods=["GET","POST"])
-def download_video():
-    
-    print('download_video')
-    try:
-        format = request.form.to_dict()['format']        
-        #print(format)
-        download_type= yt_download.getDownloadType(format=format)
-        #print(download_type)
-        
-        fname = yt_download.downloadVideo(download_type, format)   
-        #print("fname: ",fname)  
-    
-        return send_file(fname, as_attachment=True)
-    except:
-        return "Video download failed!"
-    
+# download file page
+@app.route(download_file_route, methods=methods)
+def download_file():
+    if request.method=="POST":
+        buffer = BytesIO()
+        url = YouTube(session['link'])
+        print(url)
+        itag = request.form.get('itag')
+        print(itag)
+        video = url.streams.get_by_itag(itag)
+        video.stream_to_buffer(buffer)
+        buffer.seek(0)
+        return send_file(buffer, as_attachment=True, download_name="abc.mp4")
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
-    
+

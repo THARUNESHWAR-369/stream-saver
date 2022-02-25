@@ -35,9 +35,12 @@ body {
 .main_container {
     /*background-color: red;*/
     width: 100%;
-    height: 100vh;
+    height: fit-content;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
 }
 
 .body_container {
@@ -152,6 +155,10 @@ body {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.audio_cards {
+    margin-top: 2%;
+}
+
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
     padding: 18px 10px;
@@ -175,4 +182,86 @@ body {
     display: inline-block;
     padding: 10px;
     width: 15%;
+}
+
+.error_container {
+    margin-bottom: 4%;
+}
+
+.error_container h4 {
+    color: red;
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+
+.footer {
+    background: whitesmoke;
+    box-shadow: 0 0 20px 5px rgb(0 0 0 / 4%);
+    padding: 15px;
+    text-align: center;
+    letter-spacing: 1.2px;
+    font-family: monospace;
+    font-size: medium;
+    font-weight: bolder;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+.footer_container {
+    margin-top: 3%;
+}
+
+.loader_container {
+    display: none;
+    background-color: rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+
+.loader {
+    background-image: url('../monkey_loader.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+@media only screen and (max-width: 680px) {
+    .cards {
+        width: 20%;
+    }
+}
+
+
+@media only screen and (max-width: 450px) {
+    .cards {
+        width: 25%;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .cards {
+        width: 30%;
+    }
+}
+
+
+@media only screen and (max-width: 330px) {
+    .cards {
+        width: 35%;
+    }
+}
+
+@media only screen and (max-width: 280px) {
+    .cards {
+        width: 40%;
+    }
 }

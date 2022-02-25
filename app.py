@@ -36,14 +36,13 @@ download_file_route = '/download_file'
 def home():
     if request.method == "POST":
         session['link'] = request.form.get("video-url")
-        print(request.form.get("video-url"), session['link'])
         try:
             url = YouTube(session['link'])
             url.check_availability()
         except Exception as e:
-            return "url not found "+e
-        return render_template("home.html", url=url)
-    return render_template("home.html", url=None)
+            return render_template("home.html", url=None, error="url not found.")
+        return render_template("home.html", url=url, error=None)
+    return render_template("home.html", url=None, error= None)
 
 # download file page
 @app.route(download_file_route, methods=methods)
@@ -51,13 +50,12 @@ def download_file():
     if request.method=="POST":
         buffer = BytesIO()
         url = YouTube(session['link'])
-        print(url)
         itag = request.form.get('itag')
-        print(itag)
+            
         video = url.streams.get_by_itag(itag)
         video.stream_to_buffer(buffer)
         buffer.seek(0)
-        return send_file(buffer, as_attachment=True, download_name="abc.mp4")
+        return send_file(buffer, as_attachment=True, download_name=video.default_filename)
     return redirect(url_for("home"))
 
 if __name__ == "__main__":

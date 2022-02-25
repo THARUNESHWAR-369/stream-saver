@@ -16,6 +16,11 @@
     
 </head>
 <body>
+
+    <div class="loader_container" id="loader_container">
+        <div class="loader"></div>
+    </div>
+
     <div class="nav_container">
         <div class="nav">
             <h2>Youtube Downloader</h2>
@@ -26,11 +31,17 @@
         <div class="body_container">
 
             <div class="form_container">
-                <form method="POST">
+                <form id="form" method="POST" action="/">
                     <input type="text" placeholder="Video url" name="video-url" autocomplete="off">
-                    <button type="submit" class="submit-btn">GO</button>
+                    <button id="submit-btn" type="submit" class="submit-btn">GO</button>
                 </form>   
             </div>
+
+            {% if error != none %}
+                <div class="error_container">
+                    <h4>{{error}}</h4>
+                </div>
+            {% endif %}
 
             {% if url != none %}
                 <div class="video_details">
@@ -44,7 +55,7 @@
 
                     
                 <div class="cards_container">
-                    <div class="video_cards row">
+                    <div class="video_cards">
                         <header>Video: </header>
                         {% for i in url.streams.filter(progressive=True, type=video) %} 
                             <div class="cards">
@@ -56,15 +67,89 @@
                         {% endfor %}
                     </div>
 
+                    <div class="audio_cards">
+                        <header>Audio: </header>
+                        {% for i in url.streams.filter(type='audio') %} 
+                            <div class="cards">
+                                <form id="download-form" action="{{ url_for('download_file') }}" method="post">                                  
+                                    <input style="display:none;" type="text" name="itag" value="{{ i.itag }}" readonly>
+                                    <input class="card" id="load_loader" type="submit" value="{{ i.abr }}">
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                 </div>
 
             {% endif %}
         </div>
+        
+        <div class="footer_container">
+            <div class="footer">
+                <h3>Done by THARUNESHWAR</h3>
+            </div>
+        </div>
+
     </div>
 
+    <!--  Ajax  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
+    <script>
+       /* if (document.getElementById('loader_container').style.display == "block"){
+            document.getElementById('loader_container').style.display = "none"
+        }
+        else{
+            document.getElementById('loader_container').style.display = "block"
+        }*/
+        
+        /*$(document).ready(()=>{
+
+            document.getElementById('loader_container').style.display = "block";
+            
+            $.ajax({
+                url:'/',
+                type:"get",
+                beforeSend: ()=>{
+                    document.getElementById('loader_container').style.display = "block";
+                },
+                success:(res)=>{
+                    console.log(res);
+                    document.getElementById('loader_container').style.display = "none";
+                },
+                error:(e)=>{
+                    console.log(e);
+                    document.getElementById('loader_container').style.display = "none";
+                },
+                complete: ()=>{
+                    document.getElementById('loader_container').style.display = "none";
+                }
+            });
+        });*/
+
+       /* function loadLoader(e){
+            document.getElementById('loader_container').style.display = "block";
+            console.log(e.id);
+            $.ajax({
+                url:'/download_file',
+                type:"post",
+                data: {'itag':e.id},
     
+                success:(res)=>{
+                    console.log(res);
+                    document.getElementById('loader_container').style.display = "none";
+                },
+                error:(e)=>{
+                    console.log(e);
+                    document.getElementById('loader_container').style.display = "none";
+                }
+            });
+        }*/
+
+    </script>
     
+       
 
 </body>
 </html>

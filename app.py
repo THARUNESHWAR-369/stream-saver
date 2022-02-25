@@ -40,8 +40,8 @@ def home():
         try:
             url = YouTube(session['link'])
             url.check_availability()
-        except:
-            return "url not found"
+        except Exception as e:
+            return "url not found "+e
         return render_template("home.html", url=url)
     return render_template("home.html", url=None)
 

@@ -1,0 +1,155 @@
+:root {
+    --themeColor: #ffb345;
+}
+
+.navbar>.container-fluid {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 8px;
+}
+
+.navbar-nav {
+    margin-top: 10px;
+}
+
+.container-fluid {
+    width: 100vh;
+}
+
+.navbar-collapse {
+    flex-basis: 100%;
+    flex-grow: 0;
+    align-items: center;
+    text-align: center;
+    padding-top: 0px;
+}
+
+.navbar-brand {
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    text-decoration: none;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+li.nav-item:hover {
+    cursor: pointer;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 30px 10px rgb(0 0 0 / 4%);
+}
+
+
+.container {
+    /*width: 100vh;*/
+    margin-top: 7%;
+}
+
+.url-form-btn {
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: var(--themeColor);
+    color: white;
+}
+
+.url-form-btn:hover {
+    border-radius: 8px;
+    box-shadow: 0px 0px 30px 10px rgb(0 0 0 / 4%);
+}
+
+.url-content {
+    /*background: red;*/
+    text-align: center;
+    align-items: center;
+    margin: 15% 0 0 0;
+
+    font-family: monospace;
+    letter-spacing: 1.5px;
+}
+
+.video-img img {
+    width: 70%;
+}
+
+.video-title h3 {
+    font-weight: bolder;
+}
+
+.download-options {
+    margin-top: 6%;
+}
+
+.video-options {
+}
+
+.card {
+    font-family: monospace;
+    letter-spacing: 1px;
+    font-weight: bold;
+    float: left;
+    width: 25%;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    text-align: center;
+    background-color: var(--themeColor);
+    margin: 1%;
+    align-items: center;
+}
+
+.card a {
+    text-decoration: none;
+    color: white;
+}
+
+.card-title {
+    font-size: 0.95rem;
+}
+
+.card-text {
+    font-size: 0.87rem;
+}
+
+.footer {
+    text-align: center;
+    align-items: center;
+    font-weight: bolder;
+    font-family: monospace;
+    background: var(--themeColor);
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    border-radius: 6px;
+    color: white;
+}
+
+.footer h3 {
+    font-size: 1.5rem;
+}
+
+.ft {
+    margin-top: 5%;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+  .video-options {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}

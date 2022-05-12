@@ -43,45 +43,6 @@ def home():
 
     return render_template('index.html', error=None, data=None)
 
-"""
-# home page
-@app.route(home_route, methods=methods)
-def home():
-    if request.method == "POST":
-        print("Form URL: ", request.form.get("video-url"))
-        session['link'] = request.form.get("video-url")
-        print(session['link'], YouTube(session['link']).streams.get_highest_resolution())
-        try:
-            url = YouTube(session['link'])
-            print("URL: ",url)
-            #url.check_availability()
-            print("Url availability: ",url)
-
-            print("Url data: ",url.streams)
-
-            print("Youtube Video URL: ",session['link'])
-        except Exception as e:
-            print("[app error]: ",e)
-            return render_template("home.html", url=None, error="url not found.")
-        return render_template("home.html", url=url, error=None)
-    else:
-        return render_template("home.html", url=None, error= None)
-
-# download file page
-@app.route(download_file_route, methods=methods)
-def download_file():
-    if request.method=="POST":
-        buffer = BytesIO()
-        url = YouTube(session['link'])
-        itag = request.form.get('itag')
-            
-        video = url.streams.get_by_itag(itag)
-        video.stream_to_buffer(buffer)
-        buffer.seek(0)
-        return send_file(buffer, as_attachment=True, download_name=video.default_filename)
-    return redirect(url_for("home"))
-
-"""
 
 if __name__ == "__main__":
     app.run(debug=True)

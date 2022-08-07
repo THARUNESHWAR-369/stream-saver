@@ -17,7 +17,7 @@ from app_utils import url_details
 app = Flask(__name__)
 
 # secret key
-app.config['SECRET_KEY'] = "adksjfksjdfiomewo34j3o4jw3oaj4"
+app.config['SECRET_KEY'] = ""
 
 # methods
 methods = ['POST', "GET"]

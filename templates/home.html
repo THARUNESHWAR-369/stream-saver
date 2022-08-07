@@ -8,7 +8,6 @@
 
     <!--  External css  -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-    <link rel="stylesheet" href="../static/css/home.css">
 
     <!--  Font awesome  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -92,63 +91,6 @@
 
     </div>
 
-    <!--  Ajax  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-    <script>
-       /* if (document.getElementById('loader_container').style.display == "block"){
-            document.getElementById('loader_container').style.display = "none"
-        }
-        else{
-            document.getElementById('loader_container').style.display = "block"
-        }*/
-        
-        /*$(document).ready(()=>{
-
-            document.getElementById('loader_container').style.display = "block";
-            
-            $.ajax({
-                url:'/',
-                type:"get",
-                beforeSend: ()=>{
-                    document.getElementById('loader_container').style.display = "block";
-                },
-                success:(res)=>{
-                    console.log(res);
-                    document.getElementById('loader_container').style.display = "none";
-                },
-                error:(e)=>{
-                    console.log(e);
-                    document.getElementById('loader_container').style.display = "none";
-                },
-                complete: ()=>{
-                    document.getElementById('loader_container').style.display = "none";
-                }
-            });
-        });*/
-
-       /* function loadLoader(e){
-            document.getElementById('loader_container').style.display = "block";
-            console.log(e.id);
-            $.ajax({
-                url:'/download_file',
-                type:"post",
-                data: {'itag':e.id},
-    
-                success:(res)=>{
-                    console.log(res);
-                    document.getElementById('loader_container').style.display = "none";
-                },
-                error:(e)=>{
-                    console.log(e);
-                    document.getElementById('loader_container').style.display = "none";
-                }
-            });
-        }*/
-
-    </script>
-    
        
 
 </body>

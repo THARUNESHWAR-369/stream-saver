@@ -1,6 +1,6 @@
 import requests
 
-REQUEST_URL = "https://save-from.net/api/convert"
+REQUEST_URL = ""
 
 def check_valid_url(url):
     __r = requests.post(REQUEST_URL, params={"url":url}).json()

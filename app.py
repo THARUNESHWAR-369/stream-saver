@@ -24,26 +24,24 @@ methods = ['POST', "GET"]
 
 # routes
 home_route = '/'
-download_file_route = '/download_file'
 
-
-@app.route("/", methods=methods)
+@app.route(home_route, methods=methods)
 def home():
     if request.method == "POST":
-        session['video_url'] = request.form['video-url']
-
-        is_valid_url = check_valid_url(session['video_url'] )
-
-        if is_valid_url == True :
-            url_data = url_details(url=session['video_url'])
+        video_url = request.form['video-url']
+        print(video_url)
+        is_valid_url = check_valid_url(video_url)
+        print("is_valid_url: ",is_valid_url)
+        if is_valid_url :
+            url_data = url_details(url=video_url)
             if  url_data['status'] == True:
-                return render_template('index.html', error=None, data=url_data)
-        return render_template('index.html', error="Url not Found :)", data=None)
+                return render_template('home.html', error=None, data=url_data)
+        return render_template('home.html', error="Url not Found :)", data=None)
 
 
-    return render_template('index.html', error=None, data=None)
+    return render_template('home.html', error=None, data=None)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
 

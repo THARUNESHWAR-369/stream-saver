@@ -1,13 +1,12 @@
 import requests
 
-REQUEST_URL = ""
+REQUEST_URL = "https://save-from.net/api/convert"
 
 def check_valid_url(url):
     __r = requests.post(REQUEST_URL, params={"url":url}).json()
     if 'meta' not in __r:
         return False
     return True
-    #return False if not __r['meta'] else True
 
 def get_watch_value(url):
     return url.split('v=')[-1]

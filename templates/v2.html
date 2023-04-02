@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Mp3 & Mp4 from Youtube</title>
+
+    <!--  JQuery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- External Css -->
+    <link href="{{ url_for('static', filename='css/v2.css') }}" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- External fonts  -->
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    
+    <!--   Font Awesome   -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+<body>
+    <div class="bg-cont">
+        <div class="shadow"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <header>
+                <h2>Youtube Video Downloader</h2>
+            </header>
+        </div>
+
+        <div class="search-container">
+            <div class="search-bar">
+                <div class="search-bar-container">
+                    <input type="text" name="video_url" id="video_url" placeholder="vidoe url...." autocomplete="off" />
+                    <span id="searchMovie"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="error">
+            <div class="error-container">
+                <p id="error-p"></p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="video-content-container">
+                <div class="poster">
+                    <img id="thumb" src="" alt="">
+                </div>
+                <div class="download-options">
+                    <div class="download-options-container">
+                        <span>1</span>
+                        <span>1</span>
+                        <span>1</span>
+                        <span>1</span>
+                        <span>1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $("#searchMovie").click(()=>{
+            $.ajax({
+                type: "POST",
+                url: "/",
+                data: { "video_url": $("#video_url").val() }, 
+                success: function(data) {
+                    console.log("Request successful, response received:", data);
+
+                    $("#thumb").attr('src', data['video_meta_data']['thumb'])
+
+                    if (data['status']) {
+
+                    }
+                    else {
+                        $(".error").css('display', 'block');
+                        $("#error").val(data['error']);
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+
+        })
+    </script>
+
+</body>
+</html>

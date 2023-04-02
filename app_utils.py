@@ -1,6 +1,68 @@
 import requests
 
-REQUEST_URL = "https://save-from.net/api/convert"
+
+
+
+
+class YT_DOWNLOADER:
+    
+    def __init__(self, video_url) -> None:
+        self.__REQUEST_URL = "https://save-from.net/api/convert"
+        self.video_url = video_url
+
+        print("self.video_url: ",self.video_url)
+        print( self.__sendRequest())
+        self.__isValidRequ = True if 'status' not in self.__sendRequest() else False
+
+        print(self.__isValidRequ)
+
+    def __sendRequest(self) -> dict:
+        try:
+            r = requests.post(self.__REQUEST_URL, params={"url":self.video_url})
+            return r.json()
+        except TimeoutError:
+            return {
+                "status":False
+            }
+
+    #def check_valid_url(self) -> bool:
+    #    return self.__isValidRequ
+
+    def __getVideoMetaData(self, req) -> dict:
+        meta = req['meta']
+        thumb = req['thumb']
+        timestamp = req['timestamp']
+
+        updateData = {
+            "meta":meta,
+            "thumb":thumb,
+            "timestamp":timestamp
+        }
+
+        return updateData
+
+    def download(self) -> dict:
+
+        if self.check_valid_url():
+            req = self.__sendRequest()
+
+            videoMetaData = self.__getVideoMetaData(req)
+
+            return {
+                "status":True,
+                "video_meta_data":videoMetaData,
+            }
+
+
+        return {
+            "status":False,
+            "error":"Invalid URL"
+        }
+
+
+
+
+"""
 
 def check_valid_url(url):
     __r = requests.post(REQUEST_URL, params={"url":url}).json()
@@ -116,3 +178,4 @@ def url_details(url):
     }
 
 
+"""

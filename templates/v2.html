@@ -13,10 +13,6 @@
     <!-- External Css -->
     <link href="{{ url_for('static', filename='css/v2.css') }}" rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <!-- External fonts  -->
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +21,7 @@
     
     
     <!--   Font Awesome   -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 </head>
@@ -44,7 +40,7 @@
         <div class="search-container">
             <div class="search-bar">
                 <div class="search-bar-container">
-                    <input type="text" name="video_url" id="video_url" placeholder="vidoe url...." autocomplete="off" />
+                    <input type="text" name="video_url" id="video_url" placeholder="video url...." autocomplete="off" />
                     <span id="searchMovie"><i class="fa fa-search" aria-hidden="true"></i></span>
                 </div>
             </div>
@@ -61,22 +57,100 @@
             <div class="video-content-container">
                 <div class="poster">
                     <img id="thumb" src="" alt="">
+                    <p id="video-duration"></p><i class="fa-solid fa-volume"></i>
+                </div>
+                <div class="description">
+                    <p id="video-name"></p>
+                    
                 </div>
                 <div class="download-options">
-                    <div class="download-options-container">
-                        <span>1</span>
-                        <span>1</span>
-                        <span>1</span>
-                        <span>1</span>
-                        <span>1</span>
+                    <div class="download-options-container" id="download-options-container">
+                        <span>
+                            <p id="quatlity">720p</p>
+                            <p><i class="fa-solid fa-volume"></i></p>
+                        </span>
+                       <!--<span>
+                            <p id="quatlity">720p</p>
+                            <p><i class="fa-solid fa-volume"></i></p>
+                        </span>
+                        <span>
+                            <p id="quatlity">720p</p>
+                            <p><i class="fa-solid fa-volume"></i></p>
+                        </span>
+                        <span>
+                            <p id="quatlity">720p</p>
+                            <p><i class="fa-solid fa-volume"></i></p>
+                        </span>
+                        <span>
+                            <p id="quatlity">720p</p>
+                            <p><i class="fa-solid fa-volume"></i></p>
+                        </span>-->
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-container">
+                <p>DONE ' BY THARUNESHWAR</p>
             </div>
         </div>
 
     </div>
 
     <script>
+
+        function footerAnim(anim) {
+            if (anim) {
+                $(".footer").css('bottom', null);
+                document.querySelector('.footer').style.bottom = null;
+                $('.footer').css('margin-top', '2rem')
+            }
+            else {
+                $(".footer").css('bottom', '0px');
+                $('.footer').css('margin-top', '0rem')
+            }
+        }
+
+        function updateVideoData(video_data) {
+            let download_options_container = document.getElementById('download-options-container');
+            for(var key in video_data['without_audio']) {
+                let span = document.createElement('span');
+                
+                let span_p = document.createElement('p');
+                span_p.id = 'quality';
+                span_p.innerHTML = video_data['without_audio'][key][0]+"P";
+
+                let span_p_icon = document.createElement('p');
+                span_p_icon.innerHTML = `<i class="fa-solid fa-volume"></i>`;
+
+                span.appendChild(span_p)
+                span.appendChild(span_p_icon)
+
+                download_options_container.appendChild(span)
+            }
+
+        }
+
+        function updateDownloadsOptions(download_data) {
+            updateVideoData(download_data['video_data']);
+        }
+
+        function updateData(v_meataData) {
+            // updated Thumbnail 
+            $("#thumb").attr('src', v_meataData['thumb']);
+            $("#thumb").click(()=>{
+                let a = document.createElement('a');
+                a.href = v_meataData['meta']['source'];
+                a.target = "_blank";
+                a.click();
+            })
+
+            // update description
+            $("p#video-name").html(v_meataData['meta']['title']);
+            $("p#video-duration").html(v_meataData['meta']['duration']);
+        }
+
         $("#searchMovie").click(()=>{
             $.ajax({
                 type: "POST",
@@ -85,14 +159,22 @@
                 success: function(data) {
                     console.log("Request successful, response received:", data);
 
-                    $("#thumb").attr('src', data['video_meta_data']['thumb'])
-
                     if (data['status']) {
+                        $(".error").css('display', 'none');
+                        $("p#error-p").html("");
+                        footerAnim(true);
 
+                        // display content
+                        $(".content").css('display', 'block');
+
+                        updateData(data['video_meta_data']);
+                        updateDownloadsOptions(data['video_downloads'])
                     }
                     else {
+                        $(".content").css('display', 'none');
                         $(".error").css('display', 'block');
-                        $("#error").val(data['error']);
+                        $("p#error-p").html(data['error']);
+                        footerAnim(false);
                     }
 
                 },
@@ -102,7 +184,10 @@
             });
 
         })
+
+        footerAnim(false)
     </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
 
 </body>
 </html>

@@ -1,32 +1,31 @@
 import requests
-
-
-
-
+import re
 
 class YT_DOWNLOADER:
+
+    __isValidRequ = False
     
     def __init__(self, video_url) -> None:
         self.__REQUEST_URL = "https://save-from.net/api/convert"
-        self.video_url = video_url
+        self.video_url = str(video_url)
 
         print("self.video_url: ",self.video_url)
-        print( self.__sendRequest())
+        
         self.__isValidRequ = True if 'status' not in self.__sendRequest() else False
 
-        print(self.__isValidRequ)
-
     def __sendRequest(self) -> dict:
-        try:
+        
+        if self.__isValidURL():
             r = requests.post(self.__REQUEST_URL, params={"url":self.video_url})
-            return r.json()
-        except TimeoutError:
-            return {
-                "status":False
-            }
+            return r.json() if r.status_code == 200 else {
+                                                    "status":False
+                                                }
+        return {
+            "status":False
+        }
 
-    #def check_valid_url(self) -> bool:
-    #    return self.__isValidRequ
+    def check_valid_url(self) -> bool:
+        return self.__isValidRequ 
 
     def __getVideoMetaData(self, req) -> dict:
         meta = req['meta']
@@ -47,10 +46,13 @@ class YT_DOWNLOADER:
             req = self.__sendRequest()
 
             videoMetaData = self.__getVideoMetaData(req)
+            video_download_urls = self.__getVideoDownloadUrls(req)
+            
 
             return {
                 "status":True,
                 "video_meta_data":videoMetaData,
+                "video_downloads":video_download_urls
             }
 
 
@@ -58,9 +60,53 @@ class YT_DOWNLOADER:
             "status":False,
             "error":"Invalid URL"
         }
+    
+    def __isValidURL(self):
+ 
+        regex = ("((http|https)://)(www.)?" +
+                "[a-zA-Z0-9@:%._\\+~#?&//=]" +
+                "{2,256}\\.[a-z]" +
+                "{2,6}\\b([-a-zA-Z0-9@:%" +
+                "._\\+~#?&//=]*)") # GreeksForGreeks
+        
+        p = re.compile(regex)
+    
+        if (self.video_url == None):
+            return False
 
+        if(re.search(p, self.video_url)):
+            return True
+        else:
+            return False
+        
 
+    def __getVideoDownloadUrls(self, req) -> dict:
+        urls = {}
+        urls_list = req['url']
+        dictData = {
+            "without_audio":[],
+            "with_audio":[]            
+        }
+        for url in urls_list:
+            if url['ext'] == 'mp4':
+                if 'audio' in url:
+                    if url['audio'] == False:
+                        dictData['without_audio'].append([
+                            url['subname'],url['url']
+                        ])
+                else:
+                    dictData['with_audio'].append([
+                            url['subname'],url['url']
+                        ])
+            
+            urls.update(
+                {
+                    "video_data":dictData,
+                    "audio_data":None
+                }
+            )
 
+        return urls
 
 """
 

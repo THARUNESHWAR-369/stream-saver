@@ -151,6 +151,13 @@ span#searchMovie i {
 .poster img {
     width: 100%;
     height: 100%;
+    border-radius: 5px;
+    box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.5);
+    cursor: pointer;
+}
+
+.poster img:hover {
+    opacity: 0.78;
 }
 
 .download-options {
@@ -167,9 +174,11 @@ span#searchMovie i {
     align-content: center;
     justify-content: space-around;
     align-items: center;
+    gap: 1rem;
 }
 
 .download-options-container span {
+    cursor: pointer;
     background: white;
     width: 150px;
     height: 150px;
@@ -182,6 +191,7 @@ span#searchMovie i {
     font-weight: bolder;
     font-size: 30px;
     box-shadow: 2px 4px 20px 0px rgba(255, 255, 255, 0.3);
+    flex-direction: column;
 }
 
 .error {
@@ -202,3 +212,27 @@ span#searchMovie i {
     max-width: 65%;
 }
 
+p#video-duration {
+    background: white;
+    position: absolute;
+    /* right: 19rem; */
+    top: 35rem;
+    border-radius: 10px;
+    padding: 0.2rem;
+    color: black;
+    font-size: 15px;
+    font-weight: bolder;
+    width: fit-content;
+    float: right;
+    margin-left: 0.5rem;
+}
+
+.footer {
+    background: rgba(255, 255, 255, 0.5);
+    color: black;
+    font-weight: bolder;
+    position: absolute;
+    width: 100%;
+    padding: 0.2rem;
+    font-size: 16px;
+}

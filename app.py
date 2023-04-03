@@ -24,21 +24,25 @@ home_route = '/'
 
 @app.route(home_route, methods=methods)
 def home():
+    metaData = None
     if request.method == "POST":
         video_url = request.form['video_url']
         print(video_url)
 
+ 
+        
         metaData = YT_DOWNLOADER(video_url).download() 
         
         print("metaData: ",metaData)
-        if metaData['status']:
+
+        if metaData != None or metaData['status']:
             return jsonify(metaData)
         else:
             return jsonify(metaData)
-
+        
     return render_template('v2.html', error=None, data=None)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port = "5500")
+    app.run(debug=True, port = "5000")
 

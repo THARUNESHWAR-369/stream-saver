@@ -41,8 +41,11 @@ class YT_DOWNLOADER:
                         url['subname'],
                         url['ext'],
                         "Undefined" if 'filesize' not in url else url['filesize'],
-                        None if url['attr']['class'] == "" else url['attr']['class']
+                        None if (url['attr'] == [] or url['attr']['class'] == "" )else None if url['attr'] == [] else url['attr']['class']
+                        
                     ]
+            if 'audio' not in url:
+                continue
             if url['audio']:
                 audio_download_data.append(getData+['audio'])
             else:

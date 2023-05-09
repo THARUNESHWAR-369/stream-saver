@@ -19,6 +19,12 @@ lib64/
 parts/
 sdist/
 var/
+.vscode
+.vscode/*
+.vscode/
+pytube/
+pytube
+pytube/*
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
@@ -128,3 +134,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+

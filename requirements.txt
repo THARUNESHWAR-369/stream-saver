@@ -1,4 +1,4 @@
-beautifulsoup4bs4
+bs4
 Flask
 gunicorn
 pytube @ file:///F:/pythonproj/youtube-video-audio-downloader/pytube

@@ -1,4 +1,3 @@
-from typing import List
 from pytube import YouTube
 from pytube.exceptions import AgeRestrictedError
 
@@ -34,7 +33,7 @@ class YouTubeVideoDownloader:
                 "status":False
             }
     
-    def __getAudioStreams(self) -> List[YouTube.streams]:
+    def __getAudioStreams(self) -> list:
                 
         try:
             return {
@@ -44,7 +43,7 @@ class YouTubeVideoDownloader:
         except AgeRestrictedError:
             raise AgeRestrictedVideoException(msg="This video is age-restricted and cannot be download")
 
-    def __getVideoStreams(self) -> List[YouTube.streams]:
+    def __getVideoStreams(self) -> list:
         try:
             return {
                 "status":True,

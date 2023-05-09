@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Download Mp3 & Mp4 from Youtube</title>
+
+    <!--  JQuery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- External Css -->
+    <link href="{{ url_for('static', filename='css/v3.css') }}" rel="stylesheet">
+
+    <!-- External fonts  -->
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!--   Font Awesome   -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-app-title">
+                <h1>Stream Saver</h1>
+            </div>    
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="tab-options">
+            <p>Download by</p>
+            <ul>
+                <li><p class="active-tab-options" id="tab-options-vu">Video url</p></li>
+                <li><p id="tab-options-search">Search</p></li>
+                <li><p id="tab-options-playlist">Playlist</p></li>
+            </ul>
+        </section>
+
+        <section class="tab-options-section">
+            <section class="video-url-section" id="video-url-section">
+                <div class="search-bar-video-url-section">
+                    <input type="text" id="video-url" name="video-url" placeholder="video url" autocomplete="off" required />
+                    <p id="video-url-btn">Download</a>
+                </div>
+                <div class="error" id="error">
+                    <p id="errorP">Errororor</p>
+                </div>
+                <div class="video-url-section-container" id="video-url-section-container">
+                    <div class="video-url-section-image img-skeleton" id="video-url-section-image" style="--skeleton-height: 22rem;--skeleton-width: 100%;">
+                        <!--<img src='' alt="img" />-->
+                    </div>
+
+                    <div class="video-title text-skeleton" id="video-title-id"  style="--text-skeleton-width: 100%;">
+                        <p id="video-title"></p> 
+                        <span id="video-duration"></span>
+                    </div>
+
+                    <div class="video-url-container-tab-options">
+                        <p id="video-url-tab-video" class="active-video-url-tab-options">Video</p>
+                        <p id="video-url-tab-audio">Audio</p>
+                    </div>
+                    <div class="video-url-tab-container" id="video-url-tab-container">
+                        <div class="video-url-tab-video-container">
+                            <div class="video-url-tab-cards" id="video-url-tab-cards">
+                                <div class="video-url-card-items card-skeleton" >
+                                    
+                                </div>
+                                <div class="video-url-card-items card-skeleton">
+                                    
+                                </div>
+                                <div class="video-url-card-items card-skeleton">
+                                    
+                                </div>
+                                <div class="video-url-card-items card-skeleton">
+                                    
+                                </div>
+                                <div class="video-url-card-items card-skeleton">
+                                    
+                                </div>
+                                <div class="video-url-card-items card-skeleton">
+                                    
+                                </div>
+                                <div class="video-url-card-items card-skeleton">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-url-tab-audio-container" id="video-url-tab-audio-container">
+                        <div class="video-url-tab-cards" id="audio-url-tab-cards">
+                            <div class="video-url-card-items card-skeleton">
+                                
+                            </div>
+                            <div class="video-url-card-items card-skeleton">
+                                
+                            </div>
+                            <div class="video-url-card-items card-skeleton">
+                                
+                            </div>
+                            <div class="video-url-card-items card-skeleton">
+                                
+                            </div>
+                            <div class="video-url-card-items card-skeleton">
+                                
+                            </div>
+                            <div class="video-url-card-items card-skeleton">
+                                
+                            </div>
+                            <div class="video-url-card-items card-skeleton">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="searchby-section" id="searchby-section">
+                <div class="search-bar-video-url-section">
+                    <input type="text" id="search-video-name" name="search-video-name" placeholder="video name" autocomplete="off" required />
+                    <p id="search-video-btn">Search</a>
+                </div>
+                <div class="error" id="error-ss">
+                    <p id="errorP-ss">Errororor</p>
+                </div>
+
+                <div class="searchSection-container" id="searchSection-container">
+                    <div class="search-section-cards" id="search-section-cards">
+
+                        <div class="search-section-card">
+                            <div class="search-section-card-left">
+                                <div class="search-section-card-left-img img-skeleton" style="--skeleton-height: 10rem; --skeleton-width: 20rem;">
+<!--                                 <img src="https://i.ytimg.com/vi/0sJeBiUCIt4/hq720.jpg" alt=""/>-->
+                                </div>
+                            </div>
+                            <div class="search-section-card-right">
+                                <div class="search-section-card-right-content">
+                                    <p class="ss-card-right-content-title text-skeleton" style="--text-skeleton-width: 100%;"></p>
+                                    <div class="ss-card-right-content-container">
+                                        <!--<span id="ss-card-duration text-skeleton"></span>
+                                        <p id="ss-card-download-btn text-skeleton"></p>-->
+                                        <span class="text-skeleton" style="--text-skeleton-width: 5rem;">       </span>
+                                        <p class="text-skeleton" style="--text-skeleton-width: 5rem;">       </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="search-section-card">
+                            <div class="search-section-card-left">
+                                <div class="search-section-card-left-img img-skeleton" style="--skeleton-height: 10rem; --skeleton-width: 20rem;">
+<!--                                 <img src="https://i.ytimg.com/vi/0sJeBiUCIt4/hq720.jpg" alt=""/>-->
+                                </div>
+                            </div>
+                            <div class="search-section-card-right">
+                                <div class="search-section-card-right-content">
+                                    <p class="ss-card-right-content-title text-skeleton" style="--text-skeleton-width: 100%;"></p>
+                                    <div class="ss-card-right-content-container">
+                                        <!--<span id="ss-card-duration text-skeleton"></span>
+                                        <p id="ss-card-download-btn text-skeleton"></p>-->
+                                        <span class="text-skeleton" style="--text-skeleton-width: 5rem;">       </span>
+                                        <p class="text-skeleton" style="--text-skeleton-width: 5rem;">       </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="playlist-section" id="playlist-section">playlist section</section>
+        </section>
+
+        <div class="footer">
+            <div class="footer-container">
+                <p>DONE ' BY THARUNESHWAR</p>
+            </div>
+        </div>
+
+    </div>
+
+     <!-- Font awesome  -->
+    <script src="https://kit.fontawesome.com/808b6c4e65.js" crossorigin="anonymous"></script>
+
+    <!-- External Js -->
+    <script src="{{ url_for('static', filename='js/v3s.js') }}"></script>
+
+</body>
+</html>

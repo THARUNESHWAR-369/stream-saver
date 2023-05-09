@@ -1,5 +1,5 @@
 bs4
 Flask
 gunicorn
-pytube @ file:///F:/pythonproj/youtube-video-audio-downloader/pytube
+pytube
 requests

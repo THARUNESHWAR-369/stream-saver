@@ -1,6 +1,5 @@
 from flask import Flask, request
 from flask import render_template
-from flask import send_file
 
 from utils.ytVideoDownloader import YouTubeVideoDownloader
 from utils.downloadBySearch import DownloadBySearch

@@ -3,10 +3,40 @@ from pytube.exceptions import AgeRestrictedError
 
 from .utils import formatDuration, AgeRestrictedVideoException
 
+import requests
+
 class YouTubeVideoDownloader:
     
     def __init__(self, url : str) -> None:
         self.__yt = YouTube(url)
+        
+    
+    def __convertToVideo(self, vid="", links=""):
+        __cvt_api = "https://www.y2mate.com/mates/convertV2/index"
+        __cvt_param = {
+            "vid": '8uubqafUPZs',
+            'k': 'joERDYThxMTwZZ71vqbXo8KsAl7j4qR0hNgqkwxyUfMcts0H8da8cpkcYPVdncTxRpABoA=='
+        }
+        r = requests.post(__cvt_api, data=__cvt_param)
+        print("__convertToVideo : r.status_code: ",r.status_code, r.json())
+        
+    def __ageRestriction(self) :
+                    
+        vu = "https://www.youtubepp.comnsfw/embed/8uubqafUPZs"
+        __api_url = "https://www.y2mate.com/mates/analyzeV2/ajax"
+        __api_param = {
+            "k_query": vu,
+            'k_page': 'home',
+            'hl': 'en',
+            'q_auto': 0,
+        }
+        
+        r = requests.post(__api_url, data=__api_param)
+        
+        print("r.status_code: ",r.status_code)
+        
+        return r.json()
+        
     
     def __getThumbnail_url(self) -> str:
         try:
@@ -34,7 +64,7 @@ class YouTubeVideoDownloader:
             }
     
     def __getAudioStreams(self) -> list:
-                
+                        
         try:
             return {
                 "status":True,
@@ -97,6 +127,9 @@ class YouTubeVideoDownloader:
                             }
                         )
         except AgeRestrictedVideoException as e:
+            ar = self.__ageRestriction()
+            self.__convertToVideo()
+
             return {
                 "status" : False,
                 "error" : e.msg

@@ -37,7 +37,7 @@ section {
     letter-spacing: 0.1rem;
     color: red;
     margin-bottom: 0.1rem;
-    width: auto;
+    width: max-content;
 }
 
 .errorP {
@@ -601,7 +601,9 @@ section.tab-options-section {
         display: flex;
         flex-direction: column;
     }
-
+    .tab-options ul li {
+        margin: 0;
+    }
 }
 
 @media only screen and (max-width: 300px){ 

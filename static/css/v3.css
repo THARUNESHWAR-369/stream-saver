@@ -143,6 +143,12 @@ section.tab-options-section {
     margin-top: 4rem;
 }
 
+.playlist-section #tempP {
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
 .video-url-section .search-bar-video-url-section, .searchby-section  .search-bar-video-url-section, .playlist-section  .search-bar-video-url-section{
     width: 100%;
     display: flex;

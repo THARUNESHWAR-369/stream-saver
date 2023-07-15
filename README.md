@@ -6,6 +6,11 @@
 [![Maintenance](https://img.shields.io/badge/framework-flask-red.svg)](https://flask.palletsprojects.com/en/2.0.x/) 
 [![Maintenance](https://img.shields.io/badge/Frontend-HTML/CSS/JS-green.svg)](https://img.shields.io/badge/Frontend-HTML/CSS/JS-green.svg)
 
+
+> # Screenshots
+> 
+> <img src="https://github.com/THARUNESHWAR-369/youtube-video-audio-downloader/blob/main/images/look1.png" width="800"/> <img src="https://github.com/THARUNESHWAR-369/youtube-video-audio-downloader/blob/main/images/look2.png" width="800"/>
+
 ## How to run.
 > ```$ git clone https://github.com/THARUNESHWAR-369/youtube-video-audio-downloader.git```
 > 

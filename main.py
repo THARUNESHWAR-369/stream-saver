@@ -34,7 +34,6 @@ def getBasicDetails():
     except RegexMatchError:
         return {"status":False}
 
-
 @app.route("/getStreamsData", methods=["POST"])
 def getStreamsData():
 
